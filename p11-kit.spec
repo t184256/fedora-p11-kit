@@ -1,6 +1,6 @@
 Name:           p11-kit
 Version:        0.3
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        Library for loading and sharing PKCS#11 modules
 
 License:        BSD
@@ -15,7 +15,7 @@ such a way that they're discoverable.
 
 %package        devel
 Summary:        Development files for %{name}
-Requires:       %{name} = %{version}-%{release}
+Requires:       %{name}%{?_isa} = %{version}-%{release}
 
 %description    devel
 The %{name}-devel package contains libraries and header files for
@@ -59,6 +59,9 @@ rm $RPM_BUILD_ROOT%{_libdir}/*.la
 
 
 %changelog
+* Wed Aug 17 2011 Kalev Lember <kalevlember@gmail.com> - 0.3-2
+- Tighten -devel subpackage deps (#725905)
+
 * Fri Jul 29 2011 Kalev Lember <kalevlember@gmail.com> - 0.3-1
 - Update to 0.3
 - Upstream rewrote the ASL 2.0 bits, which makes the whole package
