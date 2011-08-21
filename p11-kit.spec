@@ -1,6 +1,6 @@
 Name:           p11-kit
-Version:        0.3
-Release:        2%{?dist}
+Version:        0.4
+Release:        1%{?dist}
 Summary:        Library for loading and sharing PKCS#11 modules
 
 License:        BSD
@@ -36,6 +36,8 @@ make install DESTDIR=$RPM_BUILD_ROOT
 mkdir -p $RPM_BUILD_ROOT%{_sysconfdir}/pkcs11/modules
 
 rm $RPM_BUILD_ROOT%{_libdir}/*.la
+# Install the example conf with %%doc instead
+rm $RPM_BUILD_ROOT%{_sysconfdir}/pkcs11/pkcs11.conf.example
 
 
 %post -p /sbin/ldconfig
@@ -45,6 +47,7 @@ rm $RPM_BUILD_ROOT%{_libdir}/*.la
 
 %files
 %doc AUTHORS COPYING NEWS README
+%doc p11-kit/pkcs11.conf.example
 %dir %{_sysconfdir}/pkcs11
 %dir %{_sysconfdir}/pkcs11/modules
 %{_bindir}/p11-kit
@@ -59,6 +62,10 @@ rm $RPM_BUILD_ROOT%{_libdir}/*.la
 
 
 %changelog
+* Sun Aug 21 2011 Kalev Lember <kalevlember@gmail.com> - 0.4-1
+- Update to 0.4
+- Install the example config file to documentation directory
+
 * Wed Aug 17 2011 Kalev Lember <kalevlember@gmail.com> - 0.3-2
 - Tighten -devel subpackage deps (#725905)
 
