@@ -1,5 +1,5 @@
 Name:           p11-kit
-Version:        0.4
+Version:        0.5
 Release:        1%{?dist}
 Summary:        Library for loading and sharing PKCS#11 modules
 
@@ -62,6 +62,9 @@ rm $RPM_BUILD_ROOT%{_sysconfdir}/pkcs11/pkcs11.conf.example
 
 
 %changelog
+* Sun Sep 04 2011 Kalev Lember <kalevlember@gmail.com> - 0.5-1
+- Update to 0.5
+
 * Sun Aug 21 2011 Kalev Lember <kalevlember@gmail.com> - 0.4-1
 - Update to 0.4
 - Install the example config file to documentation directory
