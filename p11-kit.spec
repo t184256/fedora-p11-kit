@@ -1,6 +1,6 @@
 Name:           p11-kit
-Version:        0.9
-Release:        2%{?dist}
+Version:        0.11
+Release:        1%{?dist}
 Summary:        Library for loading and sharing PKCS#11 modules
 
 License:        BSD
@@ -62,6 +62,9 @@ rm $RPM_BUILD_ROOT%{_sysconfdir}/pkcs11/pkcs11.conf.example
 
 
 %changelog
+* Sat Feb 11 2012 Kalev Lember <kalevlember@gmail.com> - 0.11-1
+- Update to 0.11
+
 * Fri Jan 13 2012 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 0.9-2
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_17_Mass_Rebuild
 
