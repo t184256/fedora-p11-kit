@@ -1,5 +1,5 @@
 Name:           p11-kit
-Version:        0.12
+Version:        0.13
 Release:        1%{?dist}
 Summary:        Library for loading and sharing PKCS#11 modules
 
@@ -66,6 +66,9 @@ make check
 
 
 %changelog
+* Mon Jul 16 2012 Kalev Lember <kalevlember@gmail.com> - 0.13-1
+- Update to 0.13
+
 * Tue Mar 27 2012 Kalev Lember <kalevlember@gmail.com> - 0.12-1
 - Update to 0.12
 - Run self tests in %%check
