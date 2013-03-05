@@ -1,11 +1,12 @@
 Name:           p11-kit
-Version:        0.14
-Release:        2%{?dist}
+Version:        0.16.0
+Release:        1%{?dist}
 Summary:        Library for loading and sharing PKCS#11 modules
 
 License:        BSD
 URL:            http://p11-glue.freedesktop.org/p11-kit.html
 Source0:        http://p11-glue.freedesktop.org/releases/p11-kit-%{version}.tar.gz
+BuildRequires:  libtasn1-devel >= 2.14
 
 %description
 p11-kit provides a way to load and enumerate PKCS#11 modules, as well
@@ -34,8 +35,8 @@ make %{?_smp_mflags} V=1
 %install
 make install DESTDIR=$RPM_BUILD_ROOT
 mkdir -p $RPM_BUILD_ROOT%{_sysconfdir}/pkcs11/modules
-
-rm $RPM_BUILD_ROOT%{_libdir}/*.la
+rm -f $RPM_BUILD_ROOT%{_libdir}/*.la
+rm -f $RPM_BUILD_ROOT%{_libdir}/pkcs11/*.la
 # Install the example conf with %%doc instead
 rm $RPM_BUILD_ROOT%{_sysconfdir}/pkcs11/pkcs11.conf.example
 
@@ -54,9 +55,14 @@ make check
 %doc p11-kit/pkcs11.conf.example
 %dir %{_sysconfdir}/pkcs11
 %dir %{_sysconfdir}/pkcs11/modules
+%dir %{_datadir}/p11-kit
+%dir %{_datadir}/p11-kit/modules
 %{_bindir}/p11-kit
 %{_libdir}/libp11-kit.so.*
 %{_libdir}/p11-kit-proxy.so
+%{_libdir}/pkcs11/p11-kit-trust.so
+%{_datadir}/p11-kit/modules/p11-kit-trust.module
+%{_datadir}/p11-kit/p11-kit-extract-trust
 
 %files devel
 %{_includedir}/p11-kit-1/
@@ -66,6 +72,9 @@ make check
 
 
 %changelog
+* Tue Mar 05 2013 Stef Walter <stefw@redhat.com> - 0.16.0-1
+- Update to upstream version 0.16.0
+
 * Thu Feb 14 2013 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 0.14-2
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_19_Mass_Rebuild
 
