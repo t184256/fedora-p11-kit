@@ -1,5 +1,5 @@
 Name:           p11-kit
-Version:        0.16.0
+Version:        0.16.1
 Release:        1%{?dist}
 Summary:        Library for loading and sharing PKCS#11 modules
 
@@ -28,7 +28,9 @@ developing applications that use %{name}.
 
 
 %build
-%configure --disable-static
+# These paths are the source paths that  come from the plan here:
+# https://fedoraproject.org/wiki/Features/SharedSystemCertificates:SubTasks
+%configure --disable-static --with-system-anchors=%{_datadir}/pki/ca-trust-source:%{_sysconfdir}/pki/ca-trust/source
 make %{?_smp_mflags} V=1
 
 
@@ -72,6 +74,10 @@ make check
 
 
 %changelog
+* Tue Mar 05 2013 Stef Walter <stefw@redhat.com> - 0.16.1-1
+- Update to upstream version 0.16.1
+- Setup source directories as appropriate for Shared System Certificates feature
+
 * Tue Mar 05 2013 Stef Walter <stefw@redhat.com> - 0.16.0-1
 - Update to upstream version 0.16.0
 
