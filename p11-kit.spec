@@ -1,5 +1,5 @@
 Name:           p11-kit
-Version:        0.16.1
+Version:        0.16.3
 Release:        1%{?dist}
 Summary:        Library for loading and sharing PKCS#11 modules
 
@@ -21,6 +21,27 @@ Requires:       %{name}%{?_isa} = %{version}-%{release}
 %description    devel
 The %{name}-devel package contains libraries and header files for
 developing applications that use %{name}.
+
+
+%package        trust
+Summary:        System trust module from %{name}
+Requires:       %{name}%{?_isa} = %{version}-%{release}
+Requires(post):   %{_sbindir}/update-alternatives
+Requires(postun): %{_sbindir}/update-alternatives
+Conflicts:        nss < 3.14.3-9
+
+%description    trust
+The %{name}-trust package contains a system trust PKCS#11 module which
+contains certificate anchors and black lists.
+
+
+# solution taken from icedtea-web.spec
+%define multilib_arches ppc64 sparc64 x86_64
+%ifarch %{multilib_arches}
+%define alt_ckbi  libnssckbi.so.%{_arch}
+%else
+%define alt_ckbi  libnssckbi.so
+%endif
 
 
 %prep
@@ -49,7 +70,17 @@ make check
 
 %post -p /sbin/ldconfig
 
+%post trust
+%{_sbindir}/update-alternatives --install %{_libdir}/libnssckbi.so \
+	%{alt_ckbi} %{_libdir}/pkcs11/p11-kit-trust.so 30
+
 %postun -p /sbin/ldconfig
+
+%postun trust
+if [ $1 -eq 0 ] ; then
+	# package removal
+	%{_sbindir}/update-alternatives --remove %{alt_ckbi} %{_libdir}/pkcs11/p11-kit-trust.so
+fi
 
 
 %files
@@ -62,9 +93,6 @@ make check
 %{_bindir}/p11-kit
 %{_libdir}/libp11-kit.so.*
 %{_libdir}/p11-kit-proxy.so
-%{_libdir}/pkcs11/p11-kit-trust.so
-%{_datadir}/p11-kit/modules/p11-kit-trust.module
-%{_datadir}/p11-kit/p11-kit-extract-trust
 
 %files devel
 %{_includedir}/p11-kit-1/
@@ -72,8 +100,18 @@ make check
 %{_libdir}/pkgconfig/p11-kit-1.pc
 %doc %{_datadir}/gtk-doc/
 
+%files trust
+%{_libdir}/pkcs11/p11-kit-trust.so
+%{_datadir}/p11-kit/modules/p11-kit-trust.module
+%{_datadir}/p11-kit/p11-kit-extract-trust
+
 
 %changelog
+* Fri Mar 08 2013 Stef Walter <stefw@redhat.com> - 0.16.3-1
+- Update to upstream version 0.16.3
+- Split out system trust module into its own package.
+- p11-kit-trust provides an alternative to an nss module
+
 * Tue Mar 05 2013 Stef Walter <stefw@redhat.com> - 0.16.1-1
 - Update to upstream version 0.16.1
 - Setup source directories as appropriate for Shared System Certificates feature
