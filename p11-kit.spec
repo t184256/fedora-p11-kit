@@ -1,5 +1,5 @@
 Name:           p11-kit
-Version:        0.16.3
+Version:        0.16.4
 Release:        1%{?dist}
 Summary:        Library for loading and sharing PKCS#11 modules
 
@@ -107,6 +107,9 @@ fi
 
 
 %changelog
+* Tue Mar 12 2013 Stef Walter <stefw@redhat.com> - 0.16.4-1
+- Update to upstream version 0.16.4
+
 * Fri Mar 08 2013 Stef Walter <stefw@redhat.com> - 0.16.3-1
 - Update to upstream version 0.16.3
 - Split out system trust module into its own package.
