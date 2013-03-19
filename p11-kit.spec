@@ -1,5 +1,5 @@
 Name:           p11-kit
-Version:        0.16.4
+Version:        0.17.3
 Release:        1%{?dist}
 Summary:        Library for loading and sharing PKCS#11 modules
 
@@ -51,7 +51,7 @@ contains certificate anchors and black lists.
 %build
 # These paths are the source paths that  come from the plan here:
 # https://fedoraproject.org/wiki/Features/SharedSystemCertificates:SubTasks
-%configure --disable-static --with-system-anchors=%{_datadir}/pki/ca-trust-source:%{_sysconfdir}/pki/ca-trust/source
+%configure --disable-static --with-trust-paths=%{_sysconfdir}/pki/ca-trust/source:%{_datadir}/pki/ca-trust-source
 make %{?_smp_mflags} V=1
 
 
@@ -107,6 +107,10 @@ fi
 
 
 %changelog
+* Mon Mar 18 2013 Stef Walter <stefw@redhat.com> - 0.17.3-1
+- Update to upstream version 0.17.3
+- Put the trust input paths in the right order
+
 * Tue Mar 12 2013 Stef Walter <stefw@redhat.com> - 0.16.4-1
 - Update to upstream version 0.16.4
 
