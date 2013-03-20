@@ -1,5 +1,5 @@
 Name:           p11-kit
-Version:        0.17.3
+Version:        0.17.4
 Release:        1%{?dist}
 Summary:        Library for loading and sharing PKCS#11 modules
 
@@ -107,6 +107,9 @@ fi
 
 
 %changelog
+* Wed Mar 20 2013 Stef Walter <stefw@redhat.com> - 0.17.3-1
+- Update to upstream version 0.17.4
+
 * Mon Mar 18 2013 Stef Walter <stefw@redhat.com> - 0.17.3-1
 - Update to upstream version 0.17.3
 - Put the trust input paths in the right order
