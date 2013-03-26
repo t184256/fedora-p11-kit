@@ -1,11 +1,12 @@
 Name:           p11-kit
-Version:        0.17.4
+Version:        0.17.5
 Release:        1%{?dist}
 Summary:        Library for loading and sharing PKCS#11 modules
 
 License:        BSD
 URL:            http://p11-glue.freedesktop.org/p11-kit.html
 Source0:        http://p11-glue.freedesktop.org/releases/p11-kit-%{version}.tar.gz
+Source1:	p11-kit-extract-trust
 BuildRequires:  libtasn1-devel >= 2.14
 
 %description
@@ -47,7 +48,6 @@ contains certificate anchors and black lists.
 %prep
 %setup -q
 
-
 %build
 # These paths are the source paths that  come from the plan here:
 # https://fedoraproject.org/wiki/Features/SharedSystemCertificates:SubTasks
@@ -60,6 +60,7 @@ make install DESTDIR=$RPM_BUILD_ROOT
 mkdir -p $RPM_BUILD_ROOT%{_sysconfdir}/pkcs11/modules
 rm -f $RPM_BUILD_ROOT%{_libdir}/*.la
 rm -f $RPM_BUILD_ROOT%{_libdir}/pkcs11/*.la
+install -p -m 755 %{SOURCE1} $RPM_BUILD_ROOT%{_datadir}/p11-kit/
 # Install the example conf with %%doc instead
 rm $RPM_BUILD_ROOT%{_sysconfdir}/pkcs11/pkcs11.conf.example
 
@@ -107,7 +108,15 @@ fi
 
 
 %changelog
-* Wed Mar 20 2013 Stef Walter <stefw@redhat.com> - 0.17.3-1
+* Thu Mar 28 2013 Stef Walter <stefw@redhat.com> - 0.17.5-1
+- Make 'p11-kit extract-trust' call update-ca-trust
+- Work around 32-bit oveflow of certificate dates
+- Build fixes
+
+* Tue Mar 26 2013 Stef Walter <stefw@redhat.com> - 0.17.4-2
+- Pull in patch from upstream to fix build on ppc (#927394)
+
+* Wed Mar 20 2013 Stef Walter <stefw@redhat.com> - 0.17.4-1
 - Update to upstream version 0.17.4
 
 * Mon Mar 18 2013 Stef Walter <stefw@redhat.com> - 0.17.3-1

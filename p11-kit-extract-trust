@@ -1,0 +1,11 @@
+#!/usr/bin/bash
+
+set -e
+
+if test "$UID" != "0"; then
+	echo "p11-kit: the 'extract-trust' command must be run as root" >&2
+	exit 2
+fi
+
+exec /usr/bin/update-ca-trust
+
