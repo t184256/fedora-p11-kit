@@ -1,5 +1,5 @@
 Name:           p11-kit
-Version:        0.17.5
+Version:        0.18.0
 Release:        1%{?dist}
 Summary:        Library for loading and sharing PKCS#11 modules
 
@@ -108,6 +108,12 @@ fi
 
 
 %changelog
+* Thu Apr 04 2013 Stef Walter <stefw@redhat.com> - 0.18.0-1
+- Update to new upstream stable release
+- Various logging tweaks (#928914, #928750)
+- Make the 'p11-kit extract-trust' explicitly reject
+  additional arguments
+
 * Thu Mar 28 2013 Stef Walter <stefw@redhat.com> - 0.17.5-1
 - Make 'p11-kit extract-trust' call update-ca-trust
 - Work around 32-bit oveflow of certificate dates
