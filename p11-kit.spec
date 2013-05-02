@@ -1,5 +1,5 @@
 Name:           p11-kit
-Version:        0.18.0
+Version:        0.18.1
 Release:        1%{?dist}
 Summary:        Library for loading and sharing PKCS#11 modules
 
@@ -60,7 +60,7 @@ make install DESTDIR=$RPM_BUILD_ROOT
 mkdir -p $RPM_BUILD_ROOT%{_sysconfdir}/pkcs11/modules
 rm -f $RPM_BUILD_ROOT%{_libdir}/*.la
 rm -f $RPM_BUILD_ROOT%{_libdir}/pkcs11/*.la
-install -p -m 755 %{SOURCE1} $RPM_BUILD_ROOT%{_datadir}/p11-kit/
+install -p -m 755 %{SOURCE1} $RPM_BUILD_ROOT%{_libdir}/p11-kit/
 # Install the example conf with %%doc instead
 rm $RPM_BUILD_ROOT%{_sysconfdir}/pkcs11/pkcs11.conf.example
 
@@ -91,6 +91,7 @@ fi
 %dir %{_sysconfdir}/pkcs11/modules
 %dir %{_datadir}/p11-kit
 %dir %{_datadir}/p11-kit/modules
+%dir %{_libdir}/p11-kit
 %{_bindir}/p11-kit
 %{_libdir}/libp11-kit.so.*
 %{_libdir}/p11-kit-proxy.so
@@ -104,10 +105,14 @@ fi
 %files trust
 %{_libdir}/pkcs11/p11-kit-trust.so
 %{_datadir}/p11-kit/modules/p11-kit-trust.module
-%{_datadir}/p11-kit/p11-kit-extract-trust
+%{_libdir}/p11-kit/p11-kit-extract-trust
 
 
 %changelog
+* Thu May 02 2013 Stef Walter <stefw@redhat.com> - 0.18.1-1
+- Update to new upstream stable release
+- 'p11-kit extract-trust' lives in libdir
+
 * Thu Apr 04 2013 Stef Walter <stefw@redhat.com> - 0.18.0-1
 - Update to new upstream stable release
 - Various logging tweaks (#928914, #928750)
