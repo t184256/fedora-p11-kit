@@ -1,5 +1,5 @@
 Name:           p11-kit
-Version:        0.18.1
+Version:        0.18.2
 Release:        1%{?dist}
 Summary:        Library for loading and sharing PKCS#11 modules
 
@@ -7,7 +7,7 @@ License:        BSD
 URL:            http://p11-glue.freedesktop.org/p11-kit.html
 Source0:        http://p11-glue.freedesktop.org/releases/p11-kit-%{version}.tar.gz
 Source1:	p11-kit-extract-trust
-BuildRequires:  libtasn1-devel >= 2.14
+BuildRequires:  libtasn1-devel >= 2.3
 
 %description
 p11-kit provides a way to load and enumerate PKCS#11 modules, as well
@@ -109,6 +109,10 @@ fi
 
 
 %changelog
+* Tue May 14 2013 Stef Walter <stefw@redhat.com> - 0.18.2-1
+- Update to new upstream stable release
+- Reduce the libtasn1 dependency minimum version
+
 * Thu May 02 2013 Stef Walter <stefw@redhat.com> - 0.18.1-1
 - Update to new upstream stable release
 - 'p11-kit extract-trust' lives in libdir
