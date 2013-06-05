@@ -1,5 +1,5 @@
 Name:           p11-kit
-Version:        0.18.2
+Version:        0.18.3
 Release:        1%{?dist}
 Summary:        Library for loading and sharing PKCS#11 modules
 
@@ -8,6 +8,7 @@ URL:            http://p11-glue.freedesktop.org/p11-kit.html
 Source0:        http://p11-glue.freedesktop.org/releases/p11-kit-%{version}.tar.gz
 Source1:	p11-kit-extract-trust
 BuildRequires:  libtasn1-devel >= 2.3
+BuildRequires:	gtk-doc
 
 %description
 p11-kit provides a way to load and enumerate PKCS#11 modules, as well
@@ -51,7 +52,7 @@ contains certificate anchors and black lists.
 %build
 # These paths are the source paths that  come from the plan here:
 # https://fedoraproject.org/wiki/Features/SharedSystemCertificates:SubTasks
-%configure --disable-static --with-trust-paths=%{_sysconfdir}/pki/ca-trust/source:%{_datadir}/pki/ca-trust-source
+%configure --disable-static --enable-doc --with-trust-paths=%{_sysconfdir}/pki/ca-trust/source:%{_datadir}/pki/ca-trust-source
 make %{?_smp_mflags} V=1
 
 
@@ -95,6 +96,8 @@ fi
 %{_bindir}/p11-kit
 %{_libdir}/libp11-kit.so.*
 %{_libdir}/p11-kit-proxy.so
+%{_mandir}/man8/p11-kit.8.gz
+%{_mandir}/man5/pkcs11.conf.5.gz
 
 %files devel
 %{_includedir}/p11-kit-1/
@@ -109,6 +112,11 @@ fi
 
 
 %changelog
+* Wed Jun 05 2013 Stef Walter <stefw@redhat.com> - 0.18.3-1
+- Update to new upstream stable release
+- Fix intermittent firefox cert validation issues (#960230)
+- Include the manual pages in the package
+
 * Tue May 14 2013 Stef Walter <stefw@redhat.com> - 0.18.2-1
 - Update to new upstream stable release
 - Reduce the libtasn1 dependency minimum version
