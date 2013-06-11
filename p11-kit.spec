@@ -6,9 +6,9 @@ Summary:        Library for loading and sharing PKCS#11 modules
 License:        BSD
 URL:            http://p11-glue.freedesktop.org/p11-kit.html
 Source0:        http://p11-glue.freedesktop.org/releases/p11-kit-%{version}.tar.gz
-Source1:	p11-kit-extract-trust
+Source1:        p11-kit-extract-trust
 BuildRequires:  libtasn1-devel >= 2.3
-BuildRequires:	gtk-doc
+BuildRequires:  gtk-doc
 
 %description
 p11-kit provides a way to load and enumerate PKCS#11 modules, as well
@@ -16,23 +16,23 @@ as a standard configuration setup for installing PKCS#11 modules in
 such a way that they're discoverable.
 
 
-%package        devel
+%package devel
 Summary:        Development files for %{name}
 Requires:       %{name}%{?_isa} = %{version}-%{release}
 
-%description    devel
+%description devel
 The %{name}-devel package contains libraries and header files for
 developing applications that use %{name}.
 
 
-%package        trust
+%package trust
 Summary:        System trust module from %{name}
 Requires:       %{name}%{?_isa} = %{version}-%{release}
 Requires(post):   %{_sbindir}/update-alternatives
 Requires(postun): %{_sbindir}/update-alternatives
 Conflicts:        nss < 3.14.3-9
 
-%description    trust
+%description trust
 The %{name}-trust package contains a system trust PKCS#11 module which
 contains certificate anchors and black lists.
 
@@ -55,7 +55,6 @@ contains certificate anchors and black lists.
 %configure --disable-static --enable-doc --with-trust-paths=%{_sysconfdir}/pki/ca-trust/source:%{_datadir}/pki/ca-trust-source
 make %{?_smp_mflags} V=1
 
-
 %install
 make install DESTDIR=$RPM_BUILD_ROOT
 mkdir -p $RPM_BUILD_ROOT%{_sysconfdir}/pkcs11/modules
@@ -74,14 +73,14 @@ make check
 
 %post trust
 %{_sbindir}/update-alternatives --install %{_libdir}/libnssckbi.so \
-	%{alt_ckbi} %{_libdir}/pkcs11/p11-kit-trust.so 30
+        %{alt_ckbi} %{_libdir}/pkcs11/p11-kit-trust.so 30
 
 %postun -p /sbin/ldconfig
 
 %postun trust
 if [ $1 -eq 0 ] ; then
-	# package removal
-	%{_sbindir}/update-alternatives --remove %{alt_ckbi} %{_libdir}/pkcs11/p11-kit-trust.so
+        # package removal
+        %{_sbindir}/update-alternatives --remove %{alt_ckbi} %{_libdir}/pkcs11/p11-kit-trust.so
 fi
 
 
