@@ -1,6 +1,6 @@
 Name:           p11-kit
 Version:        0.19.3
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        Library for loading and sharing PKCS#11 modules
 
 License:        BSD
@@ -114,6 +114,9 @@ fi
 
 
 %changelog
+* Sat Aug 03 2013 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 0.19.3-2
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_20_Mass_Rebuild
+
 * Wed Jul 24 2013 Stef Walter <stefw@redhat.com> - 0.19.3-1
 - Update to new upstream 0.19.3 release (#967822)
 
