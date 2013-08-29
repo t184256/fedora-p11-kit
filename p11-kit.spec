@@ -1,12 +1,12 @@
 Name:           p11-kit
-Version:        0.19.3
-Release:        2%{?dist}
+Version:        0.19.4
+Release:        1%{?dist}
 Summary:        Library for loading and sharing PKCS#11 modules
 
 License:        BSD
 URL:            http://p11-glue.freedesktop.org/p11-kit.html
 Source0:        http://p11-glue.freedesktop.org/releases/p11-kit-%{version}.tar.gz
-Source1:        p11-kit-extract-trust
+Source1:        trust-extract-compat
 BuildRequires:  libtasn1-devel >= 2.3
 BuildRequires:  nss-softokn-freebl
 BuildRequires:  libffi-devel
@@ -97,6 +97,7 @@ fi
 %{_bindir}/p11-kit
 %{_libdir}/libp11-kit.so.*
 %{_libdir}/p11-kit-proxy.so
+%{_mandir}/man1/trust.1.gz
 %{_mandir}/man8/p11-kit.8.gz
 %{_mandir}/man5/pkcs11.conf.5.gz
 
@@ -110,10 +111,13 @@ fi
 %{_bindir}/trust
 %{_libdir}/pkcs11/p11-kit-trust.so
 %{_datadir}/p11-kit/modules/p11-kit-trust.module
-%{_libdir}/p11-kit/p11-kit-extract-trust
+%{_libdir}/p11-kit/trust-extract-compat
 
 
 %changelog
+* Thu Aug 29 2013 Stef Walter <stefw@redhat.com> - 0.19.4-1
+- Update to new upstream 0.19.4 release
+
 * Sat Aug 03 2013 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 0.19.3-2
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_20_Mass_Rebuild
 
