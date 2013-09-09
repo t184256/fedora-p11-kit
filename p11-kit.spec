@@ -1,5 +1,5 @@
 Name:           p11-kit
-Version:        0.19.4
+Version:        0.20.1
 Release:        1%{?dist}
 Summary:        Library for loading and sharing PKCS#11 modules
 
@@ -115,6 +115,12 @@ fi
 
 
 %changelog
+* Mon Sep 09 2013 Stef Walter <stefw@redhat.com> - 0.20.1-1
+- Update to upstream stable 0.20.1 release
+- Extract compat trust data after we've changes
+- Skip compat extraction if running as non-root
+- Better failure messages when removing anchors
+
 * Thu Aug 29 2013 Stef Walter <stefw@redhat.com> - 0.19.4-1
 - Update to new upstream 0.19.4 release
 
