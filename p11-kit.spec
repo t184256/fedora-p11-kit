@@ -1,5 +1,5 @@
 Name:           p11-kit
-Version:        0.20.1
+Version:        0.20.2
 Release:        1%{?dist}
 Summary:        Library for loading and sharing PKCS#11 modules
 
@@ -40,7 +40,7 @@ contains certificate anchors and black lists.
 
 
 # solution taken from icedtea-web.spec
-%define multilib_arches ppc64 sparc64 x86_64
+%define multilib_arches ppc64 sparc64 x86_64 ppc64le
 %ifarch %{multilib_arches}
 %define alt_ckbi  libnssckbi.so.%{_arch}
 %else
@@ -65,7 +65,6 @@ rm -f $RPM_BUILD_ROOT%{_libdir}/pkcs11/*.la
 install -p -m 755 %{SOURCE1} $RPM_BUILD_ROOT%{_libdir}/p11-kit/
 # Install the example conf with %%doc instead
 rm $RPM_BUILD_ROOT%{_sysconfdir}/pkcs11/pkcs11.conf.example
-
 
 %check
 make check
@@ -115,6 +114,11 @@ fi
 
 
 %changelog
+* Tue Jan 14 2014 Stef Walter <stefw@redhat.com> - 0.20.2-1
+- Update to upstream stable 0.20.2 release
+- Fix regression involving blacklisted anchors [#1041328]
+- Support ppc64le in build [#1052707]
+
 * Mon Sep 09 2013 Stef Walter <stefw@redhat.com> - 0.20.1-1
 - Update to upstream stable 0.20.1 release
 - Extract compat trust data after we've changes
