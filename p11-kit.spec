@@ -1,6 +1,6 @@
 Name:           p11-kit
 Version:        0.20.2
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        Library for loading and sharing PKCS#11 modules
 
 License:        BSD
@@ -108,12 +108,16 @@ fi
 
 %files trust
 %{_bindir}/trust
+%dir %{_libdir}/pkcs11
 %{_libdir}/pkcs11/p11-kit-trust.so
 %{_datadir}/p11-kit/modules/p11-kit-trust.module
 %{_libdir}/p11-kit/trust-extract-compat
 
 
 %changelog
+* Sat Jan 25 2014 Ville Skyttä <ville.skytta@iki.fi> - 0.20.2-2
+- Own the %%{_libdir}/pkcs11 dir in -trust.
+
 * Tue Jan 14 2014 Stef Walter <stefw@redhat.com> - 0.20.2-1
 - Update to upstream stable 0.20.2 release
 - Fix regression involving blacklisted anchors [#1041328]
