@@ -1,6 +1,6 @@
 Name:           p11-kit
-Version:        0.20.3
-Release:        3%{?dist}
+Version:        0.21.1
+Release:        1%{?dist}
 Summary:        Library for loading and sharing PKCS#11 modules
 
 License:        BSD
@@ -117,6 +117,9 @@ fi
 
 
 %changelog
+* Thu Aug 07 2014 Stef Walter <stefw@redhat.com> - 0.21.1-1
+- Update to 0.21.1 release
+
 * Wed Jul 30 2014 Tom Callaway <spot@fedoraproject.org> - 0.20.3-3
 - fix license handling
 
