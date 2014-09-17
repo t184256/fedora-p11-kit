@@ -1,5 +1,5 @@
 Name:           p11-kit
-Version:        0.21.2
+Version:        0.21.3
 Release:        1%{?dist}
 Summary:        Library for loading and sharing PKCS#11 modules
 
@@ -117,6 +117,10 @@ fi
 
 
 %changelog
+* Wed Sep 17 2014 Stef Walter <stefw@redhat.com> 0.21.3-1
+- Update to 0.21.3 release
+- Includes definitions for trust extensions rhbz#1136817
+
 * Fri Sep 05 2014 Stef Walter <stefw@redhat.com> 0.21.2-1
 - Update to 0.21.2 release
 - Fix problems with erroneous messages printed rhbz#1133857
