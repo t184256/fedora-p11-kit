@@ -1,5 +1,5 @@
 Name:           p11-kit
-Version:        0.21.3
+Version:        0.22.0
 Release:        1%{?dist}
 Summary:        Library for loading and sharing PKCS#11 modules
 
@@ -98,6 +98,7 @@ fi
 %{_bindir}/p11-kit
 %{_libdir}/libp11-kit.so.*
 %{_libdir}/p11-kit-proxy.so
+%{_libdir}/p11-kit/p11-kit-remote
 %{_mandir}/man1/trust.1.gz
 %{_mandir}/man8/p11-kit.8.gz
 %{_mandir}/man5/pkcs11.conf.5.gz
@@ -117,6 +118,9 @@ fi
 
 
 %changelog
+* Sat Oct 04 2014 Stef Walter <stefw@redhat.com> 0.22.0-1
+- Update to 0.22.0 release
+
 * Wed Sep 17 2014 Stef Walter <stefw@redhat.com> 0.21.3-1
 - Update to 0.21.3 release
 - Includes definitions for trust extensions rhbz#1136817
