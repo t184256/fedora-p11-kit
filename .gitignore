@@ -1,1 +1,5 @@
 /p11-kit-*.tar.gz
+/.*.log
+/*.src.rpm
+/p11-kit-0.*/
+/x86_64/

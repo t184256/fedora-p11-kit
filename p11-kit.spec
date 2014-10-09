@@ -1,5 +1,5 @@
 Name:           p11-kit
-Version:        0.22.0
+Version:        0.22.1
 Release:        1%{?dist}
 Summary:        Library for loading and sharing PKCS#11 modules
 
@@ -118,6 +118,10 @@ fi
 
 
 %changelog
+* Thu Oct 09 2014 Stef Walter <stefw@redhat.com> - 0.22.1-1
+- Update to 0.22.1 release
+- Use SubjectKeyIdentifier as a CKA_ID if possible rhbz#1148895
+
 * Sat Oct 04 2014 Stef Walter <stefw@redhat.com> 0.22.0-1
 - Update to 0.22.0 release
 
