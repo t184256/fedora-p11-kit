@@ -1,6 +1,6 @@
 Name:           p11-kit
 Version:        0.23.1
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        Library for loading and sharing PKCS#11 modules
 
 License:        BSD
@@ -118,6 +118,10 @@ fi
 
 
 %changelog
+* Sat Feb 21 2015 Till Maas <opensource@till.name> - 0.23.1-2
+- Rebuilt for Fedora 23 Change
+  https://fedoraproject.org/wiki/Changes/Harden_all_packages_with_position-independent_code
+
 * Fri Feb 20 2015 Stef Walter <stefw@redhat.com> - 0.23.1-1
 - Update to 0.23.1 release
 
