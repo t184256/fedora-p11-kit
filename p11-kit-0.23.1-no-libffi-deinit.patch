@@ -1,0 +1,58 @@
+From ec8a291efb87f1751a18c7e023a67232c15a4ef2 Mon Sep 17 00:00:00 2001
+From: Nikos Mavrogiannopoulos <nmav@redhat.com>
+Date: Wed, 24 Jun 2015 16:08:42 +0200
+Subject: Do not deinitialize libffi's wrapper functions
+
+Libffi uses shared memory to store them, and a deallocation
+in a child will cause issues for the parent or vice versa.
+
+Signed-off-by: Stef Walter <stefw@redhat.com>
+ * Use #if to comment out code, avoid compiler warnings
+
+diff --git a/p11-kit/virtual.c b/p11-kit/virtual.c
+index 2f4f0ae..bb0d845 100644
+--- a/p11-kit/virtual.c
++++ b/p11-kit/virtual.c
+@@ -54,6 +54,13 @@
+  * not be defined. This is checked in configure.ac
+  */
+ 
++/*
++ * Since libffi uses shared memory to store that, releasing it
++ * will cause issues on any other child or parent process that relies
++ * on that. Don't release it.
++ */
++#define LIBFFI_FREE_CLOSURES 0
++
+ #include "ffi.h"
+ #ifndef FFI_CLOSURES
+ #error "FFI_CLOSURES should be checked in configure.ac"
+@@ -2718,6 +2725,7 @@ init_wrapper_funcs (Wrapper *wrapper)
+ 	return true;
+ }
+ 
++#if LIBFFI_FREE_CLOSURES
+ static void
+ uninit_wrapper_funcs (Wrapper *wrapper)
+ {
+@@ -2726,6 +2734,7 @@ uninit_wrapper_funcs (Wrapper *wrapper)
+ 	for (i = 0; i < wrapper->ffi_used; i++)
+ 		ffi_closure_free (wrapper->ffi_closures[i]);
+ }
++#endif
+ 
+ CK_FUNCTION_LIST *
+ p11_virtual_wrap (p11_virtual *virt,
+@@ -2792,7 +2801,9 @@ p11_virtual_unwrap (CK_FUNCTION_LIST_PTR module)
+ 	if (wrapper->destroyer)
+ 		(wrapper->destroyer) (wrapper->virt);
+ 
++#if LIBFFI_FREE_CLOSURES
+ 	uninit_wrapper_funcs (wrapper);
++#endif
+ 	free (wrapper);
+ }
+ 
+-- 
+cgit v0.10.2
+

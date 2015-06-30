@@ -1,12 +1,17 @@
 Name:           p11-kit
 Version:        0.23.1
-Release:        3%{?dist}
+Release:        4%{?dist}
 Summary:        Library for loading and sharing PKCS#11 modules
 
 License:        BSD
 URL:            http://p11-glue.freedesktop.org/p11-kit.html
 Source0:        http://p11-glue.freedesktop.org/releases/p11-kit-%{version}.tar.gz
 Source1:        trust-extract-compat
+# upstreamed, can be removed when rebasing to next release
+Patch0:         p11-kit-0.23.1-no-finalize.patch
+# upstreamed, can be removed when rebasing to next release
+Patch1:         p11-kit-0.23.1-no-libffi-deinit.patch
+
 BuildRequires:  libtasn1-devel >= 2.3
 BuildRequires:  nss-softokn-freebl
 BuildRequires:  libffi-devel
@@ -50,6 +55,8 @@ contains certificate anchors and black lists.
 
 %prep
 %setup -q
+%patch0 -p1
+%patch1 -p1
 
 %build
 # These paths are the source paths that  come from the plan here:
@@ -118,6 +125,10 @@ fi
 
 
 %changelog
+* Tue Jun 30 2015 Martin Preisler <mpreisle@redhat.com> - 0.23.1-4
+- In proxy module don't call C_Finalize on a forked process [#1217915]
+- Do not deinitialize libffi's wrapper functions [#1217915]
+
 * Thu Jun 18 2015 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 0.23.1-3
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_23_Mass_Rebuild
 
