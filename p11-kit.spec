@@ -1,11 +1,11 @@
 Name:           p11-kit
-Version:        0.23.2
-Release:        2%{?dist}
+Version:        0.23.3
+Release:        1%{?dist}
 Summary:        Library for loading and sharing PKCS#11 modules
 
 License:        BSD
 URL:            http://p11-glue.freedesktop.org/p11-kit.html
-Source0:        http://p11-glue.freedesktop.org/releases/p11-kit-%{version}.tar.gz
+Source0:        https://github.com/p11-glue/p11-kit/releases/download/%{version}/p11-kit-%{version}.tar.gz
 Source1:        trust-extract-compat
 
 BuildRequires:  libtasn1-devel >= 2.3
@@ -63,7 +63,7 @@ make install DESTDIR=$RPM_BUILD_ROOT
 mkdir -p $RPM_BUILD_ROOT%{_sysconfdir}/pkcs11/modules
 rm -f $RPM_BUILD_ROOT%{_libdir}/*.la
 rm -f $RPM_BUILD_ROOT%{_libdir}/pkcs11/*.la
-install -p -m 755 %{SOURCE1} $RPM_BUILD_ROOT%{_libdir}/p11-kit/
+install -p -m 755 %{SOURCE1} $RPM_BUILD_ROOT%{_libexecdir}/p11-kit/
 # Install the example conf with %%doc instead
 rm $RPM_BUILD_ROOT%{_sysconfdir}/pkcs11/pkcs11.conf.example
 
@@ -95,11 +95,11 @@ fi
 %dir %{_sysconfdir}/pkcs11/modules
 %dir %{_datadir}/p11-kit
 %dir %{_datadir}/p11-kit/modules
-%dir %{_libdir}/p11-kit
+%dir %{_libexecdir}/p11-kit
 %{_bindir}/p11-kit
 %{_libdir}/libp11-kit.so.*
 %{_libdir}/p11-kit-proxy.so
-%{_libdir}/p11-kit/p11-kit-remote
+%{_libexecdir}/p11-kit/p11-kit-remote
 %{_mandir}/man1/trust.1.gz
 %{_mandir}/man8/p11-kit.8.gz
 %{_mandir}/man5/pkcs11.conf.5.gz
@@ -115,10 +115,14 @@ fi
 %dir %{_libdir}/pkcs11
 %{_libdir}/pkcs11/p11-kit-trust.so
 %{_datadir}/p11-kit/modules/p11-kit-trust.module
-%{_libdir}/p11-kit/trust-extract-compat
+%{_libexecdir}/p11-kit/trust-extract-compat
 
 
 %changelog
+* Tue Dec 20 2016 Daiki Ueno <dueno@redhat.com> - 0.23.3-1
+- Update to 0.23.3 release
+- Adjust executables location from %%libdir to %%libexecdir
+
 * Thu Feb 04 2016 Fedora Release Engineering <releng@fedoraproject.org> - 0.23.2-2
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_24_Mass_Rebuild
 
