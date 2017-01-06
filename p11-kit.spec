@@ -1,6 +1,6 @@
 Name:           p11-kit
 Version:        0.23.3
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        Library for loading and sharing PKCS#11 modules
 
 License:        BSD
@@ -9,7 +9,6 @@ Source0:        https://github.com/p11-glue/p11-kit/releases/download/%{version}
 Source1:        trust-extract-compat
 
 BuildRequires:  libtasn1-devel >= 2.3
-BuildRequires:  nss-softokn-freebl
 BuildRequires:  libffi-devel
 BuildRequires:  gtk-doc
 
@@ -55,7 +54,7 @@ contains certificate anchors and black lists.
 %build
 # These paths are the source paths that  come from the plan here:
 # https://fedoraproject.org/wiki/Features/SharedSystemCertificates:SubTasks
-%configure --disable-static --enable-doc --with-trust-paths=%{_sysconfdir}/pki/ca-trust/source:%{_datadir}/pki/ca-trust-source --with-hash-impl=freebl --disable-silent-rules
+%configure --disable-static --enable-doc --with-trust-paths=%{_sysconfdir}/pki/ca-trust/source:%{_datadir}/pki/ca-trust-source --disable-silent-rules
 make %{?_smp_mflags} V=1
 
 %install
@@ -119,6 +118,9 @@ fi
 
 
 %changelog
+* Fri Jan  6 2017 Daiki Ueno <dueno@redhat.com> - 0.23.3-2
+- Use internal hash implementation instead of NSS (#1390598)
+
 * Tue Dec 20 2016 Daiki Ueno <dueno@redhat.com> - 0.23.3-1
 - Update to 0.23.3 release
 - Adjust executables location from %%libdir to %%libexecdir
