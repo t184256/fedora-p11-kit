@@ -1,6 +1,6 @@
 Name:           p11-kit
 Version:        0.23.3
-Release:        2%{?dist}
+Release:        3%{?dist}
 Summary:        Library for loading and sharing PKCS#11 modules
 
 License:        BSD
@@ -118,6 +118,9 @@ fi
 
 
 %changelog
+* Sat Feb 11 2017 Fedora Release Engineering <releng@fedoraproject.org> - 0.23.3-3
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_26_Mass_Rebuild
+
 * Fri Jan  6 2017 Daiki Ueno <dueno@redhat.com> - 0.23.3-2
 - Use internal hash implementation instead of NSS (#1390598)
 
