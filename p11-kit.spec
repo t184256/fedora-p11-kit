@@ -1,6 +1,6 @@
 Name:           p11-kit
-Version:        0.23.3
-Release:        3%{?dist}
+Version:        0.23.4
+Release:        1%{?dist}
 Summary:        Library for loading and sharing PKCS#11 modules
 
 License:        BSD
@@ -11,6 +11,7 @@ Source1:        trust-extract-compat
 BuildRequires:  libtasn1-devel >= 2.3
 BuildRequires:  libffi-devel
 BuildRequires:  gtk-doc
+BuildRequires:	systemd
 
 %description
 p11-kit provides a way to load and enumerate PKCS#11 modules, as well
@@ -98,7 +99,12 @@ fi
 %{_bindir}/p11-kit
 %{_libdir}/libp11-kit.so.*
 %{_libdir}/p11-kit-proxy.so
+%{_libdir}/pkcs11/p11-kit-client.so
 %{_libexecdir}/p11-kit/p11-kit-remote
+%{_libexecdir}/p11-kit/p11-kit-server
+%{_userunitdir}/p11-kit-remote@.service
+%{_userunitdir}/p11-kit-remote.socket
+%{_userunitdir}/sockets.target.wants/p11-kit-remote.socket
 %{_mandir}/man1/trust.1.gz
 %{_mandir}/man8/p11-kit.8.gz
 %{_mandir}/man5/pkcs11.conf.5.gz
@@ -118,6 +124,9 @@ fi
 
 
 %changelog
+* Wed Feb 22 2017 Daiki Ueno <dueno@redhat.com> - 0.23.4-1
+- Update to 0.23.4 release
+
 * Sat Feb 11 2017 Fedora Release Engineering <releng@fedoraproject.org> - 0.23.3-3
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_26_Mass_Rebuild
 
