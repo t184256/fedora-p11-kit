@@ -1,6 +1,6 @@
 Name:           p11-kit
 Version:        0.23.4
-Release:        2%{?dist}
+Release:        3%{?dist}
 Summary:        Library for loading and sharing PKCS#11 modules
 
 License:        BSD
@@ -106,8 +106,13 @@ fi
 %dir %{_sysconfdir}/pkcs11/modules
 %dir %{_datadir}/p11-kit
 %dir %{_datadir}/p11-kit/modules
+%dir %{_libexecdir}/p11-kit
+%{_bindir}/p11-kit
 %{_libdir}/libp11-kit.so.*
 %{_libdir}/p11-kit-proxy.so
+%{_libexecdir}/p11-kit/p11-kit-remote
+%{_mandir}/man1/trust.1.gz
+%{_mandir}/man8/p11-kit.8.gz
 %{_mandir}/man5/pkcs11.conf.5.gz
 
 %files devel
@@ -122,21 +127,19 @@ fi
 %{_libdir}/pkcs11/p11-kit-trust.so
 %{_datadir}/p11-kit/modules/p11-kit-trust.module
 %{_libexecdir}/p11-kit/trust-extract-compat
-%{_mandir}/man1/trust.1.gz
 
 %files tools
-%dir %{_libexecdir}/p11-kit
-%{_bindir}/p11-kit
 %{_libdir}/pkcs11/p11-kit-client.so
-%{_libexecdir}/p11-kit/p11-kit-remote
 %{_libexecdir}/p11-kit/p11-kit-server
 %{_userunitdir}/p11-kit-remote@.service
 %{_userunitdir}/p11-kit-remote.socket
 %{_userunitdir}/sockets.target.wants/p11-kit-remote.socket
-%{_mandir}/man8/p11-kit.8.gz
 
 
 %changelog
+* Fri Feb 24 2017 Daiki Ueno <dueno@redhat.com> - 0.23.4-3
+- Move p11-kit command back to main package
+
 * Fri Feb 24 2017 Daiki Ueno <dueno@redhat.com> - 0.23.4-2
 - Split out command line tools to -tools subpackage, to avoid a
   multilib issue with the main package.  Suggested by Yanko Kaneti.
