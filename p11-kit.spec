@@ -1,13 +1,12 @@
 Name:           p11-kit
-Version:        0.23.4
-Release:        3%{?dist}
+Version:        0.23.5
+Release:        1%{?dist}
 Summary:        Library for loading and sharing PKCS#11 modules
 
 License:        BSD
 URL:            http://p11-glue.freedesktop.org/p11-kit.html
 Source0:        https://github.com/p11-glue/p11-kit/releases/download/%{version}/p11-kit-%{version}.tar.gz
 Source1:        trust-extract-compat
-Patch0:		p11-kit-systemd-path.patch
 
 BuildRequires:  libtasn1-devel >= 2.3
 BuildRequires:  libffi-devel
@@ -41,13 +40,14 @@ The %{name}-trust package contains a system trust PKCS#11 module which
 contains certificate anchors and black lists.
 
 
-%package tools
-Summary:        Command line tools for %{name}
+%package server
+Summary:        Server and client commands for %{name}
 Requires:       %{name}%{?_isa} = %{version}-%{release}
 
-%description tools
-The %{name}-tools package contains command line tools that enable to export
-PKCS#11 modules through a Unix domain socket.
+%description server
+The %{name}-server package contains command line tools that enable to
+export PKCS#11 modules through a Unix domain socket.  Note that this
+feature is still experimental.
 
 
 # solution taken from icedtea-web.spec
@@ -61,7 +61,6 @@ PKCS#11 modules through a Unix domain socket.
 
 %prep
 %setup -q
-%patch0 -p1 -b .systemd-path
 
 %build
 # These paths are the source paths that  come from the plan here:
@@ -128,15 +127,16 @@ fi
 %{_datadir}/p11-kit/modules/p11-kit-trust.module
 %{_libexecdir}/p11-kit/trust-extract-compat
 
-%files tools
+%files server
 %{_libdir}/pkcs11/p11-kit-client.so
 %{_libexecdir}/p11-kit/p11-kit-server
-%{_userunitdir}/p11-kit-remote@.service
-%{_userunitdir}/p11-kit-remote.socket
-%{_userunitdir}/sockets.target.wants/p11-kit-remote.socket
 
 
 %changelog
+* Thu Mar  2 2017 Daiki Ueno <dueno@redhat.com> - 0.23.5-1
+- Update to 0.23.5 release
+- Rename -tools subpackage to -server and remove systemd unit files
+
 * Fri Feb 24 2017 Daiki Ueno <dueno@redhat.com> - 0.23.4-3
 - Move p11-kit command back to main package
 
