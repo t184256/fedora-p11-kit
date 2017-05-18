@@ -1,6 +1,6 @@
 Name:           p11-kit
 Version:        0.23.5
-Release:        2%{?dist}
+Release:        3%{?dist}
 Summary:        Library for loading and sharing PKCS#11 modules
 
 License:        BSD
@@ -135,6 +135,9 @@ fi
 
 
 %changelog
+* Thu May 18 2017 Daiki Ueno <dueno@redhat.com> - 0.23.5-3
+- Update p11-kit-modifiable.patch to simplify the logic
+
 * Thu May 18 2017 Daiki Ueno <dueno@redhat.com> - 0.23.5-2
 - Make "trust anchor --remove" work again
 

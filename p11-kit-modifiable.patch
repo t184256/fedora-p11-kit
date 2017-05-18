@@ -156,3 +156,101 @@ index ad22fcb..3e7d735 100644
 -- 
 2.9.4
 
+From d661194319f2375c1764125b449bf924c0cbc8a1 Mon Sep 17 00:00:00 2001
+From: Daiki Ueno <dueno@redhat.com>
+Date: Thu, 18 May 2017 14:27:36 +0200
+Subject: [PATCH] trust: Simplify the check for the magic
+
+Instead of reusing the CKA_X_GENERATED attribute, check the file
+contents directly in the caller side.
+---
+ trust/parser.c  |  7 +++----
+ trust/persist.c | 19 +++++++++++--------
+ trust/persist.h |  3 +++
+ 3 files changed, 17 insertions(+), 12 deletions(-)
+
+diff --git a/trust/parser.c b/trust/parser.c
+index abe86fc..f92cdc9 100644
+--- a/trust/parser.c
++++ b/trust/parser.c
+@@ -630,11 +630,10 @@ p11_parser_format_persist (p11_parser *parser,
+ 
+ 	ret = p11_persist_read (parser->persist, parser->basename, data, length, objects);
+ 	if (ret) {
++		if (!p11_persist_is_generated (data, length))
++			modifiablev = CK_FALSE;
+ 		for (i = 0; i < objects->num; i++) {
+-			CK_BBOOL generatedv;
+-			attrs = objects->elem[i];
+-			if (p11_attrs_find_bool (attrs, CKA_X_GENERATED, &generatedv) && generatedv)
+-				attrs = p11_attrs_build (attrs, &modifiable, NULL);
++			attrs = p11_attrs_build (objects->elem[i], &modifiable, NULL);
+ 			sink_object (parser, attrs);
+ 		}
+ 	}
+diff --git a/trust/persist.c b/trust/persist.c
+index 928260e..887b316 100644
+--- a/trust/persist.c
++++ b/trust/persist.c
+@@ -70,6 +70,16 @@ p11_persist_magic (const unsigned char *data,
+ 	return (strnstr ((char *)data, "[" PERSIST_HEADER "]", length) != NULL);
+ }
+ 
++bool
++p11_persist_is_generated (const unsigned char *data,
++			  size_t length)
++{
++	static const char comment[] =
++		"# This file has been auto-generated and written by p11-kit.";
++	return length >= sizeof (comment) - 1 &&
++		memcmp ((const char *)data, comment, sizeof (comment) - 1) == 0;
++}
++
+ p11_persist *
+ p11_persist_new (void)
+ {
+@@ -631,9 +641,6 @@ p11_persist_read (p11_persist *persist,
+ 	CK_ATTRIBUTE *attrs;
+ 	bool failed;
+ 	bool skip;
+-	CK_BBOOL generatedv = CK_FALSE;
+-	CK_ATTRIBUTE generated = { CKA_X_GENERATED, &generatedv, sizeof (generatedv) };
+-	static const char comment[] = "# This file has been auto-generated and written by p11-kit.";
+ 
+ 	return_val_if_fail (persist != NULL, false);
+ 	return_val_if_fail (objects != NULL, false);
+@@ -642,10 +649,6 @@ p11_persist_read (p11_persist *persist,
+ 	attrs = NULL;
+ 	failed = false;
+ 
+-	if (length >= sizeof (comment) - 1 &&
+-	    memcmp ((const char *)data, comment, sizeof (comment) - 1) == 0)
+-		generatedv = CK_TRUE;
+-
+ 	p11_lexer_init (&lexer, filename, (const char *)data, length);
+ 	while (p11_lexer_next (&lexer, &failed)) {
+ 		switch (lexer.tok_type) {
+@@ -657,7 +660,7 @@ p11_persist_read (p11_persist *persist,
+ 				p11_lexer_msg (&lexer, "unrecognized or invalid section header");
+ 				skip = true;
+ 			} else {
+-				attrs = p11_attrs_build (NULL, &generated, NULL);
++				attrs = p11_attrs_build (NULL, NULL);
+ 				return_val_if_fail (attrs != NULL, false);
+ 				skip = false;
+ 			}
+diff --git a/trust/persist.h b/trust/persist.h
+index 0ef142c..6344e4e 100644
+--- a/trust/persist.h
++++ b/trust/persist.h
+@@ -60,4 +60,7 @@ bool             p11_persist_write  (p11_persist *persist,
+ 
+ void             p11_persist_free   (p11_persist *persist);
+ 
++bool             p11_persist_is_generated (const unsigned char *data,
++					   size_t length);
++
+ #endif /* P11_PERSIST_H_ */
+-- 
+2.9.4
+
