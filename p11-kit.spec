@@ -1,12 +1,13 @@
 Name:           p11-kit
 Version:        0.23.5
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        Library for loading and sharing PKCS#11 modules
 
 License:        BSD
 URL:            http://p11-glue.freedesktop.org/p11-kit.html
 Source0:        https://github.com/p11-glue/p11-kit/releases/download/%{version}/p11-kit-%{version}.tar.gz
 Source1:        trust-extract-compat
+Patch0:         p11-kit-modifiable.patch
 
 BuildRequires:  libtasn1-devel >= 2.3
 BuildRequires:  libffi-devel
@@ -61,6 +62,7 @@ feature is still experimental.
 
 %prep
 %setup -q
+%patch0 -p1
 
 %build
 # These paths are the source paths that  come from the plan here:
@@ -133,6 +135,9 @@ fi
 
 
 %changelog
+* Thu May 18 2017 Daiki Ueno <dueno@redhat.com> - 0.23.5-2
+- Make "trust anchor --remove" work again
+
 * Thu Mar  2 2017 Daiki Ueno <dueno@redhat.com> - 0.23.5-1
 - Update to 0.23.5 release
 - Rename -tools subpackage to -server and remove systemd unit files
