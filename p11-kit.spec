@@ -1,6 +1,6 @@
 Name:           p11-kit
 Version:        0.23.8
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        Library for loading and sharing PKCS#11 modules
 
 License:        BSD
@@ -123,6 +123,7 @@ fi
 %files trust
 %{_bindir}/trust
 %dir %{_libdir}/pkcs11
+%ghost %{_libdir}/libnssckbi.so
 %{_libdir}/pkcs11/p11-kit-trust.so
 %{_datadir}/p11-kit/modules/p11-kit-trust.module
 %{_libexecdir}/p11-kit/trust-extract-compat
@@ -133,6 +134,10 @@ fi
 
 
 %changelog
+* Fri Aug 25 2017 Kai Engert <kaie@redhat.com> - 0.23.8-2
+- Fix a regression caused by a recent nss.rpm change, add a %%ghost file
+  for %%{_libdir}/libnssckbi.so that p11-kit-trust scripts install.
+
 * Tue Aug 15 2017 Daiki Ueno <dueno@redhat.com> - 0.23.8-1
 - Update to 0.23.8 release
 
