@@ -3,3 +3,5 @@
 /*.src.rpm
 /p11-kit-0.*/
 /x86_64/
+/trust-extract-compat
+/p11-kit-0.23.9.tar.gz

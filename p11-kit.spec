@@ -1,6 +1,7 @@
+# This spec file has been automatically updated
+Version:	0.23.9
+Release: 1%{?dist}
 Name:           p11-kit
-Version:        0.23.8
-Release:        2%{?dist}
 Summary:        Library for loading and sharing PKCS#11 modules
 
 License:        BSD
@@ -12,6 +13,9 @@ BuildRequires:  libtasn1-devel >= 2.3
 BuildRequires:  libffi-devel
 BuildRequires:  gtk-doc
 BuildRequires:	systemd
+# Work around for https://bugzilla.redhat.com/show_bug.cgi?id=1497147
+# Remove this once it is fixed
+BuildRequires:  pkgconfig(glib-2.0)
 
 %description
 p11-kit provides a way to load and enumerate PKCS#11 modules, as well
@@ -134,6 +138,9 @@ fi
 
 
 %changelog
+* Wed Oct 04 2017 Daiki Ueno <dueno@redhat.com> - 0.23.9-1
+- pdate to upstream 0.23.9
+
 * Fri Aug 25 2017 Kai Engert <kaie@redhat.com> - 0.23.8-2
 - Fix a regression caused by a recent nss.rpm change, add a %%ghost file
   for %%{_libdir}/libnssckbi.so that p11-kit-trust scripts install.
