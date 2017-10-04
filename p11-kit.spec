@@ -139,7 +139,7 @@ fi
 
 %changelog
 * Wed Oct 04 2017 Daiki Ueno <dueno@redhat.com> - 0.23.9-1
-- pdate to upstream 0.23.9
+- Update to upstream 0.23.9
 
 * Fri Aug 25 2017 Kai Engert <kaie@redhat.com> - 0.23.8-2
 - Fix a regression caused by a recent nss.rpm change, add a %%ghost file
