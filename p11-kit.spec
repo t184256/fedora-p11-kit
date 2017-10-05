@@ -1,6 +1,7 @@
 # This spec file has been automatically updated
 Version:	0.23.9
-Release: 1%{?dist}
+Release: 2%{?dist}
+Patch1:	p11-kit-server-eval-env.patch
 Name:           p11-kit
 Summary:        Library for loading and sharing PKCS#11 modules
 
@@ -8,6 +9,7 @@ License:        BSD
 URL:            http://p11-glue.freedesktop.org/p11-kit.html
 Source0:        https://github.com/p11-glue/p11-kit/releases/download/%{version}/p11-kit-%{version}.tar.gz
 Source1:        trust-extract-compat
+Source2:	p11-kit-client.service
 
 BuildRequires:  libtasn1-devel >= 2.3
 BuildRequires:  libffi-devel
@@ -64,7 +66,7 @@ feature is still experimental.
 
 
 %prep
-%setup -q
+%autosetup -p1
 
 %build
 # These paths are the source paths that  come from the plan here:
@@ -80,6 +82,8 @@ rm -f $RPM_BUILD_ROOT%{_libdir}/pkcs11/*.la
 install -p -m 755 %{SOURCE1} $RPM_BUILD_ROOT%{_libexecdir}/p11-kit/
 # Install the example conf with %%doc instead
 rm $RPM_BUILD_ROOT%{_sysconfdir}/pkcs11/pkcs11.conf.example
+mkdir -p $RPM_BUILD_ROOT%{_userunitdir}
+install -p -m 644 %{SOURCE2} $RPM_BUILD_ROOT%{_userunitdir}
 
 %check
 make check
@@ -134,10 +138,14 @@ fi
 
 %files server
 %{_libdir}/pkcs11/p11-kit-client.so
+%{_userunitdir}/p11-kit-client.service
 %{_libexecdir}/p11-kit/p11-kit-server
 
 
 %changelog
+* Thu Oct 05 2017 Daiki Ueno <dueno@redhat.com> - 0.23.9-2
+- server: Make it possible to eval envvar settings
+
 * Wed Oct 04 2017 Daiki Ueno <dueno@redhat.com> - 0.23.9-1
 - Update to upstream 0.23.9
 

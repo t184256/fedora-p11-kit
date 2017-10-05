@@ -1,0 +1,52 @@
+From 031912fa844c4f3da327c8b2578d9d9ce2a6473e Mon Sep 17 00:00:00 2001
+From: Daiki Ueno <dueno@redhat.com>
+Date: Thu, 5 Oct 2017 10:59:02 +0200
+Subject: [PATCH] server: Make it possible to eval envvar settings
+
+Previously, calling "eval $(p11-kit server)" from shell hung because
+the program didn't properly close stdout before forking.
+---
+ p11-kit/server.c | 20 +++++++++++---------
+ 1 file changed, 11 insertions(+), 9 deletions(-)
+
+diff --git a/p11-kit/server.c b/p11-kit/server.c
+index 97e18e2..96c77ec 100644
+--- a/p11-kit/server.c
++++ b/p11-kit/server.c
+@@ -346,6 +346,17 @@ server_loop (Server *server,
+ 	if (server->socket == -1)
+ 		return 1;
+ 
++	if (!quiet) {
++		char *path;
++
++		path = p11_path_encode (server->socket_name);
++		printf ("P11_KIT_SERVER_ADDRESS=unix:path=%s\n", path);
++		free (path);
++		printf ("P11_KIT_SERVER_PID=%d\n", getpid ());
++		fflush (stdout);
++		close (STDOUT_FILENO);
++	}
++
+ 	/* run as daemon */
+ 	if (!foreground) {
+ 		pid = fork ();
+@@ -372,15 +383,6 @@ server_loop (Server *server,
+ 
+ 	sigprocmask (SIG_BLOCK, &blockset, NULL);
+ 
+-	if (!quiet) {
+-		char *path;
+-
+-		path = p11_path_encode (server->socket_name);
+-		printf ("P11_KIT_SERVER_ADDRESS=unix:path=%s\n", path);
+-		free (path);
+-		printf ("P11_KIT_SERVER_PID=%d\n", getpid ());
+-	}
+-
+ 	/* accept connections */
+ 	ret = 0;
+ 	for (;;) {
+-- 
+2.13.6
+
