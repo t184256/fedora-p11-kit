@@ -1,6 +1,6 @@
 # This spec file has been automatically updated
 Version:	0.23.9
-Release: 2%{?dist}
+Release: 3%{?dist}
 Patch1:	p11-kit-server-eval-env.patch
 Name:           p11-kit
 Summary:        Library for loading and sharing PKCS#11 modules
@@ -143,6 +143,9 @@ fi
 
 
 %changelog
+* Thu Feb 08 2018 Fedora Release Engineering <releng@fedoraproject.org> - 0.23.9-3
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_28_Mass_Rebuild
+
 * Thu Oct 05 2017 Daiki Ueno <dueno@redhat.com> - 0.23.9-2
 - server: Make it possible to eval envvar settings
 
