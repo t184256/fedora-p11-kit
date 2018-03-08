@@ -10,6 +10,7 @@ Source0:        https://github.com/p11-glue/p11-kit/releases/download/%{version}
 Source1:        trust-extract-compat
 Source2:	p11-kit-client.service
 
+BuildRequires:  gcc
 BuildRequires:  libtasn1-devel >= 2.3
 BuildRequires:  libffi-devel
 BuildRequires:  gtk-doc
