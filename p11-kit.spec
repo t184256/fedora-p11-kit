@@ -1,5 +1,5 @@
 # This spec file has been automatically updated
-Version:	0.23.10
+Version:	0.23.12
 Release: 1%{?dist}
 Name:           p11-kit
 Summary:        Library for loading and sharing PKCS#11 modules
@@ -10,7 +10,6 @@ Source0:        https://github.com/p11-glue/p11-kit/releases/download/%{version}
 Source1:        trust-extract-compat
 Source2:	p11-kit-client.service
 
-BuildRequires:  gcc
 BuildRequires:  libtasn1-devel >= 2.3
 BuildRequires:  libffi-devel
 BuildRequires:  gtk-doc
@@ -143,6 +142,9 @@ fi
 
 
 %changelog
+* Wed May 30 2018 Daiki Ueno <dueno@redhat.com> - 0.23.12-1
+- Update to upstream 0.23.11 release
+
 * Wed Feb 28 2018 Daiki Ueno <dueno@redhat.com> - 0.23.10-1
 - Update to upstream 0.23.10 release
 
