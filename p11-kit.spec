@@ -1,6 +1,6 @@
 # This spec file has been automatically updated
 Version:	0.23.12
-Release: 1%{?dist}
+Release: 2%{?dist}
 Name:           p11-kit
 Summary:        Library for loading and sharing PKCS#11 modules
 
@@ -143,6 +143,9 @@ fi
 
 
 %changelog
+* Fri Jul 13 2018 Fedora Release Engineering <releng@fedoraproject.org> - 0.23.12-2
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_29_Mass_Rebuild
+
 * Wed May 30 2018 Daiki Ueno <dueno@redhat.com> - 0.23.12-1
 - Update to upstream 0.23.11 release
 
