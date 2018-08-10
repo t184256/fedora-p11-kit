@@ -1,6 +1,6 @@
 # This spec file has been automatically updated
-Version:	0.23.12
-Release: 2%{?dist}
+Version:	0.23.13
+Release: 1%{?dist}
 Name:           p11-kit
 Summary:        Library for loading and sharing PKCS#11 modules
 
@@ -14,7 +14,7 @@ BuildRequires:  gcc
 BuildRequires:  libtasn1-devel >= 2.3
 BuildRequires:  libffi-devel
 BuildRequires:  gtk-doc
-BuildRequires:	systemd
+BuildRequires:	systemd-devel
 # Work around for https://bugzilla.redhat.com/show_bug.cgi?id=1497147
 # Remove this once it is fixed
 BuildRequires:  pkgconfig(glib-2.0)
@@ -140,9 +140,14 @@ fi
 %{_libdir}/pkcs11/p11-kit-client.so
 %{_userunitdir}/p11-kit-client.service
 %{_libexecdir}/p11-kit/p11-kit-server
+%{_userunitdir}/p11-kit-server.service
+%{_userunitdir}/p11-kit-server.socket
 
 
 %changelog
+* Fri Aug 10 2018 Daiki Ueno <dueno@redhat.com> - 0.23.13-1
+- Update to upstream 0.23.13 release
+
 * Fri Jul 13 2018 Fedora Release Engineering <releng@fedoraproject.org> - 0.23.12-2
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_29_Mass_Rebuild
 
