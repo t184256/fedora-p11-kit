@@ -1,6 +1,6 @@
 # This spec file has been automatically updated
 Version:	0.23.13
-Release: 1%{?dist}
+Release: 2%{?dist}
 Name:           p11-kit
 Summary:        Library for loading and sharing PKCS#11 modules
 
@@ -9,6 +9,7 @@ URL:            http://p11-glue.freedesktop.org/p11-kit.html
 Source0:        https://github.com/p11-glue/p11-kit/releases/download/%{version}/p11-kit-%{version}.tar.gz
 Source1:        trust-extract-compat
 Source2:	p11-kit-client.service
+Patch:		p11-kit-proxy-cleanup.patch
 
 BuildRequires:  gcc
 BuildRequires:  libtasn1-devel >= 2.3
@@ -145,6 +146,9 @@ fi
 
 
 %changelog
+* Wed Aug 15 2018 Daiki Ueno <dueno@redhat.com> - 0.23.13-2
+- Fix invalid memory access on proxy cleanup
+
 * Fri Aug 10 2018 Daiki Ueno <dueno@redhat.com> - 0.23.13-1
 - Update to upstream 0.23.13 release
 
