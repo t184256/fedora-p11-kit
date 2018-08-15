@@ -1,6 +1,6 @@
 # This spec file has been automatically updated
 Version:	0.23.13
-Release: 2%{?dist}
+Release: 3%{?dist}
 Name:           p11-kit
 Summary:        Library for loading and sharing PKCS#11 modules
 
@@ -72,7 +72,7 @@ feature is still experimental.
 %build
 # These paths are the source paths that  come from the plan here:
 # https://fedoraproject.org/wiki/Features/SharedSystemCertificates:SubTasks
-%configure --disable-static --enable-doc --with-trust-paths=%{_sysconfdir}/pki/ca-trust/source:%{_datadir}/pki/ca-trust-source --disable-silent-rules
+%configure --disable-static --enable-doc --with-trust-paths=%{_sysconfdir}/pki/ca-trust/source:%{_datadir}/pki/ca-trust-source --disable-silent-rules LIBS='-lpthread'
 make %{?_smp_mflags} V=1
 
 %install
@@ -146,6 +146,9 @@ fi
 
 
 %changelog
+* Wed Aug 15 2018 Daiki Ueno <dueno@redhat.com> - 0.23.13-3
+- Forcibly link with libpthread to avoid regressions (rhbz#1615038)
+
 * Wed Aug 15 2018 Daiki Ueno <dueno@redhat.com> - 0.23.13-2
 - Fix invalid memory access on proxy cleanup
 
