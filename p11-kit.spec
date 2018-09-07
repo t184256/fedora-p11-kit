@@ -9,7 +9,6 @@ URL:            http://p11-glue.freedesktop.org/p11-kit.html
 Source0:        https://github.com/p11-glue/p11-kit/releases/download/%{version}/p11-kit-%{version}.tar.gz
 Source1:        trust-extract-compat
 Source2:	p11-kit-client.service
-Patch:		p11-kit-proxy-cleanup.patch
 
 BuildRequires:  gcc
 BuildRequires:  libtasn1-devel >= 2.3
@@ -72,7 +71,7 @@ feature is still experimental.
 %build
 # These paths are the source paths that  come from the plan here:
 # https://fedoraproject.org/wiki/Features/SharedSystemCertificates:SubTasks
-%configure --disable-static --enable-doc --with-trust-paths=%{_sysconfdir}/pki/ca-trust/source:%{_datadir}/pki/ca-trust-source --disable-silent-rules LIBS='-lpthread'
+%configure --disable-static --enable-doc --with-trust-paths=%{_sysconfdir}/pki/ca-trust/source:%{_datadir}/pki/ca-trust-source --disable-silent-rules
 make %{?_smp_mflags} V=1
 
 %install
