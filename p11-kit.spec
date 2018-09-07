@@ -1,6 +1,6 @@
 # This spec file has been automatically updated
-Version:	0.23.13
-Release: 3%{?dist}
+Version:	0.23.14
+Release: 1%{?dist}
 Name:           p11-kit
 Summary:        Library for loading and sharing PKCS#11 modules
 
@@ -145,6 +145,9 @@ fi
 
 
 %changelog
+* Fri Sep 07 2018 Daiki Ueno <dueno@redhat.com> - 0.23.14-1
+- Update to upstream 0.23.14 release
+
 * Wed Aug 15 2018 Daiki Ueno <dueno@redhat.com> - 0.23.13-3
 - Forcibly link with libpthread to avoid regressions (rhbz#1615038)
 
