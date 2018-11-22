@@ -1,6 +1,6 @@
 # This spec file has been automatically updated
 Version:	0.23.14
-Release: 1%{?dist}
+Release: 2%{?dist}
 Name:           p11-kit
 Summary:        Library for loading and sharing PKCS#11 modules
 
@@ -141,7 +141,7 @@ fi
 
 
 %changelog
-* Mon Oct 29 2018 James Antill <james.antill@redhat.com>
+* Mon Oct 29 2018 James Antill <james.antill@redhat.com> - 0.23.14-2
 - Remove ldconfig scriptlet, now done via. transfiletrigger in glibc.
 
 * Fri Sep 07 2018 Daiki Ueno <dueno@redhat.com> - 0.23.14-1
