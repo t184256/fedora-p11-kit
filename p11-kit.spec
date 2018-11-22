@@ -89,13 +89,9 @@ install -p -m 644 %{SOURCE2} $RPM_BUILD_ROOT%{_userunitdir}
 make check
 
 
-%post -p /sbin/ldconfig
-
 %post trust
 %{_sbindir}/update-alternatives --install %{_libdir}/libnssckbi.so \
         %{alt_ckbi} %{_libdir}/pkcs11/p11-kit-trust.so 30
-
-%postun -p /sbin/ldconfig
 
 %postun trust
 if [ $1 -eq 0 ] ; then
@@ -145,6 +141,9 @@ fi
 
 
 %changelog
+* Mon Oct 29 2018 James Antill <james.antill@redhat.com>
+- Remove ldconfig scriptlet, now done via. transfiletrigger in glibc.
+
 * Fri Sep 07 2018 Daiki Ueno <dueno@redhat.com> - 0.23.14-1
 - Update to upstream 0.23.14 release
 
