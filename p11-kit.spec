@@ -1,6 +1,6 @@
 # This spec file has been automatically updated
-Version:	0.23.14
-Release: 2%{?dist}
+Version:        0.23.14
+Release:        2%{?dist}
 Name:           p11-kit
 Summary:        Library for loading and sharing PKCS#11 modules
 
@@ -8,13 +8,13 @@ License:        BSD
 URL:            http://p11-glue.freedesktop.org/p11-kit.html
 Source0:        https://github.com/p11-glue/p11-kit/releases/download/%{version}/p11-kit-%{version}.tar.gz
 Source1:        trust-extract-compat
-Source2:	p11-kit-client.service
+Source2:        p11-kit-client.service
 
 BuildRequires:  gcc
 BuildRequires:  libtasn1-devel >= 2.3
 BuildRequires:  libffi-devel
 BuildRequires:  gtk-doc
-BuildRequires:	systemd-devel
+BuildRequires:  systemd-devel
 # Work around for https://bugzilla.redhat.com/show_bug.cgi?id=1497147
 # Remove this once it is fixed
 BuildRequires:  pkgconfig(glib-2.0)
@@ -35,11 +35,11 @@ developing applications that use %{name}.
 
 
 %package trust
-Summary:        System trust module from %{name}
-Requires:       %{name}%{?_isa} = %{version}-%{release}
-Requires(post):   %{_sbindir}/update-alternatives
-Requires(postun): %{_sbindir}/update-alternatives
-Conflicts:        nss < 3.14.3-9
+Summary:            System trust module from %{name}
+Requires:           %{name}%{?_isa} = %{version}-%{release}
+Requires(post):     %{_sbindir}/update-alternatives
+Requires(postun):   %{_sbindir}/update-alternatives
+Conflicts:          nss < 3.14.3-9
 
 %description trust
 The %{name}-trust package contains a system trust PKCS#11 module which
@@ -141,6 +141,9 @@ fi
 
 
 %changelog
+* Fri Jan 11 2018 Nils Philippsen <nils@tiptoe.de>
+- use spaces instead of tabs consistently
+
 * Mon Oct 29 2018 James Antill <james.antill@redhat.com> - 0.23.14-2
 - Remove ldconfig scriptlet, now done via. transfiletrigger in glibc.
 
