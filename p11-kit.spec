@@ -1,6 +1,6 @@
 # This spec file has been automatically updated
 Version:        0.23.14
-Release:        2%{?dist}
+Release:        3%{?dist}
 Name:           p11-kit
 Summary:        Library for loading and sharing PKCS#11 modules
 
@@ -142,7 +142,7 @@ fi
 
 
 %changelog
-* Fri Jan 11 2018 Nils Philippsen <nils@tiptoe.de>
+* Fri Jan 11 2019 Nils Philippsen <nils@tiptoe.de> - 0.23.14-3
 - use spaces instead of tabs consistently
 - prefer fixed closures to libffi closures (#1656245, patch by Daiki Ueno)
 
