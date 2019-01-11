@@ -1,0 +1,71 @@
+From 6e1046de2233fba7875d3d6a1b260192678dd0ad Mon Sep 17 00:00:00 2001
+From: Daiki Ueno <dueno@redhat.com>
+Date: Fri, 19 Oct 2018 10:21:36 +0200
+Subject: [PATCH] virtual: Prefer fixed closures to libffi closures
+
+On some circumstances (such as when loading p11-kit-proxy from httpd),
+it is known that creation of libffi closure always fails, due to
+SELinux policy.  Although this is harmless, it pollutes the journal
+and gives wrong hints when troubleshooting.  This patch changes the
+order of preference of libffi vs pre-compiled closures to avoid that.
+---
+ p11-kit/virtual.c | 19 ++++++++++++++-----
+ 1 file changed, 14 insertions(+), 5 deletions(-)
+
+diff --git a/p11-kit/virtual.c b/p11-kit/virtual.c
+index 6abfe7a..338239f 100644
+--- a/p11-kit/virtual.c
++++ b/p11-kit/virtual.c
+@@ -2832,9 +2832,14 @@ p11_virtual_wrap (p11_virtual *virt,
+                   p11_destroyer destroyer)
+ {
+ 	Wrapper *wrapper;
++	CK_FUNCTION_LIST *result;
+ 
+ 	return_val_if_fail (virt != NULL, NULL);
+ 
++	result = p11_virtual_wrap_fixed (virt, destroyer);
++	if (result)
++		return result;
++
+ 	wrapper = calloc (1, sizeof (Wrapper));
+ 	return_val_if_fail (wrapper != NULL, NULL);
+ 
+@@ -2844,8 +2849,10 @@ p11_virtual_wrap (p11_virtual *virt,
+ 	wrapper->bound.version.minor = CRYPTOKI_VERSION_MINOR;
+ 	wrapper->fixed_index = -1;
+ 
+-	if (!init_wrapper_funcs (wrapper))
+-		return p11_virtual_wrap_fixed (virt, destroyer);
++	if (!init_wrapper_funcs (wrapper)) {
++		free (wrapper);
++		return_val_if_reached (NULL);
++	}
+ 
+ 	assert ((void *)wrapper == (void *)&wrapper->bound);
+ 	assert (p11_virtual_is_wrapper (&wrapper->bound));
+@@ -2859,7 +2866,11 @@ CK_FUNCTION_LIST *
+ p11_virtual_wrap (p11_virtual *virt,
+                   p11_destroyer destroyer)
+ {
+-	return p11_virtual_wrap_fixed (virt, destroyer);
++	CK_FUNCTION_LIST *result;
++
++	result = p11_virtual_wrap_fixed (virt, destroyer);
++	return_val_if_fail (result != NULL, NULL);
++	return result;
+ }
+ 
+ #endif /* !FFI_CLOSURES */
+@@ -3068,8 +3079,6 @@ p11_virtual_wrap_fixed (p11_virtual *virt,
+ 	}
+ 	p11_mutex_unlock (&p11_virtual_mutex);
+ 
+-	return_val_if_fail (result != NULL, NULL);
+-
+ 	return result;
+ }
+ 
+-- 
+2.19.2
+

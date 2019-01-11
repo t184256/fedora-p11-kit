@@ -9,6 +9,7 @@ URL:            http://p11-glue.freedesktop.org/p11-kit.html
 Source0:        https://github.com/p11-glue/p11-kit/releases/download/%{version}/p11-kit-%{version}.tar.gz
 Source1:        trust-extract-compat
 Source2:        p11-kit-client.service
+Patch0:         0001-prefer-fixed-closures-to-libffi-closures.patch
 
 BuildRequires:  gcc
 BuildRequires:  libtasn1-devel >= 2.3
@@ -143,6 +144,7 @@ fi
 %changelog
 * Fri Jan 11 2018 Nils Philippsen <nils@tiptoe.de>
 - use spaces instead of tabs consistently
+- prefer fixed closures to libffi closures (#1656245, patch by Daiki Ueno)
 
 * Mon Oct 29 2018 James Antill <james.antill@redhat.com> - 0.23.14-2
 - Remove ldconfig scriptlet, now done via. transfiletrigger in glibc.
