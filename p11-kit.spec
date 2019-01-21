@@ -1,6 +1,6 @@
 # This spec file has been automatically updated
-Version:        0.23.14
-Release:        3%{?dist}
+Version:	0.23.15
+Release: 1%{?dist}
 Name:           p11-kit
 Summary:        Library for loading and sharing PKCS#11 modules
 
@@ -141,6 +141,9 @@ fi
 
 
 %changelog
+* Mon Jan 21 2019 Daiki Ueno <dueno@redhat.com> - 0.23.15-1
+- Update to upstream 0.23.15 release
+
 * Fri Jan 11 2019 Nils Philippsen <nils@tiptoe.de> - 0.23.14-3
 - use spaces instead of tabs consistently
 - prefer fixed closures to libffi closures (#1656245, patch by Daiki Ueno)
