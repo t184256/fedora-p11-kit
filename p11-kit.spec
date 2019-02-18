@@ -1,6 +1,6 @@
 # This spec file has been automatically updated
 Version:	0.23.15
-Release: 2%{?dist}
+Release: 3%{?dist}
 Name:           p11-kit
 Summary:        Library for loading and sharing PKCS#11 modules
 
@@ -9,6 +9,7 @@ URL:            http://p11-glue.freedesktop.org/p11-kit.html
 Source0:        https://github.com/p11-glue/p11-kit/releases/download/%{version}/p11-kit-%{version}.tar.gz
 Source1:        trust-extract-compat
 Source2:        p11-kit-client.service
+Patch0:		0001-trust-Ignore-unreadable-content-in-anchors.patch
 
 BuildRequires:  gcc
 BuildRequires:  libtasn1-devel >= 2.3
@@ -141,6 +142,9 @@ fi
 
 
 %changelog
+* Mon Feb 18 2019 Daiki Ueno <dueno@redhat.com> - 0.23.15-3
+- trust: Ignore unreadable content in anchors
+
 * Fri Feb 01 2019 Fedora Release Engineering <releng@fedoraproject.org> - 0.23.15-2
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_30_Mass_Rebuild
 
