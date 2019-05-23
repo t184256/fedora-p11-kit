@@ -1,6 +1,6 @@
 # This spec file has been automatically updated
-Version:	0.23.15
-Release: 3%{?dist}
+Version:	0.23.16
+Release: 1%{?dist}
 Name:           p11-kit
 Summary:        Library for loading and sharing PKCS#11 modules
 
@@ -141,6 +141,9 @@ fi
 
 
 %changelog
+* Thu May 23 2019 Daiki Ueno <dueno@redhat.com> - 0.23.16-1
+- Update to upstream 0.23.16 release
+
 * Mon Feb 18 2019 Daiki Ueno <dueno@redhat.com> - 0.23.15-3
 - trust: Ignore unreadable content in anchors
 
