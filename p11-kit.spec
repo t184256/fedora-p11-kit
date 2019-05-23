@@ -9,7 +9,6 @@ URL:            http://p11-glue.freedesktop.org/p11-kit.html
 Source0:        https://github.com/p11-glue/p11-kit/releases/download/%{version}/p11-kit-%{version}.tar.gz
 Source1:        trust-extract-compat
 Source2:        p11-kit-client.service
-Patch0:		0001-trust-Ignore-unreadable-content-in-anchors.patch
 
 BuildRequires:  gcc
 BuildRequires:  libtasn1-devel >= 2.3
