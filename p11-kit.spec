@@ -15,7 +15,9 @@ Source4:        p11-kit-client.service
 BuildRequires:  gcc
 BuildRequires:  libtasn1-devel >= 2.3
 BuildRequires:  libffi-devel
+BuildRequires:  gettext
 BuildRequires:  gtk-doc
+BuildRequires:  meson
 BuildRequires:  systemd-devel
 BuildRequires:  bash-completion
 # Work around for https://bugzilla.redhat.com/show_bug.cgi?id=1497147
@@ -77,22 +79,22 @@ gpgv2 --keyring %{SOURCE2} %{SOURCE1} %{SOURCE0}
 %build
 # These paths are the source paths that  come from the plan here:
 # https://fedoraproject.org/wiki/Features/SharedSystemCertificates:SubTasks
-%configure --disable-static --enable-doc --with-trust-paths=%{_sysconfdir}/pki/ca-trust/source:%{_datadir}/pki/ca-trust-source --disable-silent-rules
-make %{?_smp_mflags} V=1
+%meson -Dgtk_doc=true -Dman=true -Dtrust_paths=%{_sysconfdir}/pki/ca-trust/source:%{_datadir}/pki/ca-trust-source
+%meson_build
 
 %install
-make install DESTDIR=$RPM_BUILD_ROOT
+%meson_install
 mkdir -p $RPM_BUILD_ROOT%{_sysconfdir}/pkcs11/modules
-rm -f $RPM_BUILD_ROOT%{_libdir}/*.la
-rm -f $RPM_BUILD_ROOT%{_libdir}/pkcs11/*.la
 install -p -m 755 %{SOURCE3} $RPM_BUILD_ROOT%{_libexecdir}/p11-kit/
 # Install the example conf with %%doc instead
-rm $RPM_BUILD_ROOT%{_sysconfdir}/pkcs11/pkcs11.conf.example
+mkdir -p $RPM_BUILD_ROOT%{_docdir}/%{name}
+mv $RPM_BUILD_ROOT%{_sysconfdir}/pkcs11/pkcs11.conf.example $RPM_BUILD_ROOT%{_docdir}/%{name}/pkcs11.conf.example
 mkdir -p $RPM_BUILD_ROOT%{_userunitdir}
 install -p -m 644 %{SOURCE4} $RPM_BUILD_ROOT%{_userunitdir}
+%find_lang %{name}
 
 %check
-make check
+%meson_test
 
 
 %post trust
@@ -106,11 +108,11 @@ if [ $1 -eq 0 ] ; then
 fi
 
 
-%files
+%files -f %{name}.lang
 %{!?_licensedir:%global license %%doc}
 %license COPYING
 %doc AUTHORS NEWS README
-%doc p11-kit/pkcs11.conf.example
+%{_docdir}/%{name}/pkcs11.conf.example
 %dir %{_sysconfdir}/pkcs11
 %dir %{_sysconfdir}/pkcs11/modules
 %dir %{_datadir}/p11-kit
@@ -152,6 +154,7 @@ fi
 * Wed Jan 22 2020 Daiki Ueno <dueno@redhat.com> - 0.23.19-1
 - Update to upstream 0.23.19 release
 - Check archive signature in %%prep
+- Switch to using Meson as the build system
 
 * Mon Sep 30 2019 Daiki Ueno <dueno@redhat.com> - 0.23.18.1-1
 - Update to upstream 0.23.18.1 release
