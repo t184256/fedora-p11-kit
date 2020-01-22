@@ -7,8 +7,10 @@ Summary:        Library for loading and sharing PKCS#11 modules
 License:        BSD
 URL:            http://p11-glue.freedesktop.org/p11-kit.html
 Source0:        https://github.com/p11-glue/p11-kit/releases/download/%{version}/p11-kit-%{version}.tar.xz
-Source1:        trust-extract-compat
-Source2:        p11-kit-client.service
+Source1:        https://github.com/p11-glue/p11-kit/releases/download/%{version}/p11-kit-%{version}.tar.xz.sig
+Source2:        gpgkey-462225C3B46F34879FC8496CD605848ED7E69871.gpg
+Source3:        trust-extract-compat
+Source4:        p11-kit-client.service
 
 BuildRequires:  gcc
 BuildRequires:  libtasn1-devel >= 2.3
@@ -19,6 +21,7 @@ BuildRequires:  bash-completion
 # Work around for https://bugzilla.redhat.com/show_bug.cgi?id=1497147
 # Remove this once it is fixed
 BuildRequires:  pkgconfig(glib-2.0)
+BuildRequires:  gnupg2
 
 %description
 p11-kit provides a way to load and enumerate PKCS#11 modules, as well
@@ -67,6 +70,8 @@ feature is still experimental.
 
 
 %prep
+gpgv2 --keyring %{SOURCE2} %{SOURCE1} %{SOURCE0}
+
 %autosetup -p1
 
 %build
@@ -80,11 +85,11 @@ make install DESTDIR=$RPM_BUILD_ROOT
 mkdir -p $RPM_BUILD_ROOT%{_sysconfdir}/pkcs11/modules
 rm -f $RPM_BUILD_ROOT%{_libdir}/*.la
 rm -f $RPM_BUILD_ROOT%{_libdir}/pkcs11/*.la
-install -p -m 755 %{SOURCE1} $RPM_BUILD_ROOT%{_libexecdir}/p11-kit/
+install -p -m 755 %{SOURCE3} $RPM_BUILD_ROOT%{_libexecdir}/p11-kit/
 # Install the example conf with %%doc instead
 rm $RPM_BUILD_ROOT%{_sysconfdir}/pkcs11/pkcs11.conf.example
 mkdir -p $RPM_BUILD_ROOT%{_userunitdir}
-install -p -m 644 %{SOURCE2} $RPM_BUILD_ROOT%{_userunitdir}
+install -p -m 644 %{SOURCE4} $RPM_BUILD_ROOT%{_userunitdir}
 
 %check
 make check
@@ -146,6 +151,7 @@ fi
 %changelog
 * Wed Jan 22 2020 Daiki Ueno <dueno@redhat.com> - 0.23.19-1
 - Update to upstream 0.23.19 release
+- Check archive signature in %%prep
 
 * Mon Sep 30 2019 Daiki Ueno <dueno@redhat.com> - 0.23.18.1-1
 - Update to upstream 0.23.18.1 release
