@@ -1,12 +1,12 @@
 # This spec file has been automatically updated
-Version:	0.23.18.1
+Version:	0.23.19
 Release: 1%{?dist}
 Name:           p11-kit
 Summary:        Library for loading and sharing PKCS#11 modules
 
 License:        BSD
 URL:            http://p11-glue.freedesktop.org/p11-kit.html
-Source0:        https://github.com/p11-glue/p11-kit/releases/download/%{version}/p11-kit-%{version}.tar.gz
+Source0:        https://github.com/p11-glue/p11-kit/releases/download/%{version}/p11-kit-%{version}.tar.xz
 Source1:        trust-extract-compat
 Source2:        p11-kit-client.service
 
@@ -15,6 +15,7 @@ BuildRequires:  libtasn1-devel >= 2.3
 BuildRequires:  libffi-devel
 BuildRequires:  gtk-doc
 BuildRequires:  systemd-devel
+BuildRequires:  bash-completion
 # Work around for https://bugzilla.redhat.com/show_bug.cgi?id=1497147
 # Remove this once it is fixed
 BuildRequires:  pkgconfig(glib-2.0)
@@ -117,6 +118,7 @@ fi
 %{_mandir}/man1/trust.1.gz
 %{_mandir}/man8/p11-kit.8.gz
 %{_mandir}/man5/pkcs11.conf.5.gz
+%{_datadir}/bash-completion/completions/p11-kit
 
 %files devel
 %{_includedir}/p11-kit-1/
@@ -131,6 +133,7 @@ fi
 %{_libdir}/pkcs11/p11-kit-trust.so
 %{_datadir}/p11-kit/modules/p11-kit-trust.module
 %{_libexecdir}/p11-kit/trust-extract-compat
+%{_datadir}/bash-completion/completions/trust
 
 %files server
 %{_libdir}/pkcs11/p11-kit-client.so
@@ -141,6 +144,9 @@ fi
 
 
 %changelog
+* Wed Jan 22 2020 Daiki Ueno <dueno@redhat.com> - 0.23.19-1
+- Update to upstream 0.23.19 release
+
 * Mon Sep 30 2019 Daiki Ueno <dueno@redhat.com> - 0.23.18.1-1
 - Update to upstream 0.23.18.1 release
 
