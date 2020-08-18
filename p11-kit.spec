@@ -1,5 +1,5 @@
 # This spec file has been automatically updated
-Version:	0.23.20
+Version:	0.23.21
 Release: 2%{?dist}
 Name:           p11-kit
 Summary:        Library for loading and sharing PKCS#11 modules
@@ -151,6 +151,9 @@ fi
 
 
 %changelog
+* Tue Aug 18 2020 Packit Service <user-cont-team+packit-service@redhat.com> - 0.23.21-2
+- new upstream release: 0.23.21
+
 * Tue Jul 28 2020 Fedora Release Engineering <releng@fedoraproject.org> - 0.23.20-2
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_33_Mass_Rebuild
 
