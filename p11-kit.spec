@@ -1,6 +1,6 @@
 # This spec file has been automatically updated
 Version:	0.23.21
-Release: 2%{?dist}
+Release: 3%{?dist}
 Name:           p11-kit
 Summary:        Library for loading and sharing PKCS#11 modules
 
@@ -24,6 +24,7 @@ BuildRequires:  bash-completion
 # Remove this once it is fixed
 BuildRequires:  pkgconfig(glib-2.0)
 BuildRequires:  gnupg2
+BuildRequires:  /usr/bin/xsltproc
 
 %description
 p11-kit provides a way to load and enumerate PKCS#11 modules, as well
@@ -151,6 +152,9 @@ fi
 
 
 %changelog
+* Thu Nov 12 2020 Alexander Sosedkin <asosedkin@redhat.com> - 0.23.21-3
+- Add an explicit build dependency on xsltproc
+
 * Tue Aug 18 2020 Packit Service <user-cont-team+packit-service@redhat.com> - 0.23.21-2
 - new upstream release: 0.23.21
 
